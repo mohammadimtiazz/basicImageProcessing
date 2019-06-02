@@ -16,6 +16,7 @@ int main() {
 	img = imread("coins-orig.jpg", IMREAD_COLOR);
 	//img = imread("C:\\Users\\mimtiaz\\visualStudio17Projects\\getMeHired\\computerVision\\standredImages\\fruits.png", IMREAD_COLOR);
 
+	//checking img error
 	if (!img.data) {
 		printf("There is no image to load\n");
 		return 0;
@@ -35,6 +36,9 @@ int main() {
 	imshow(windowName, img);
 	//waitKey();
 
+	/*	Following is the method of spliting color image into three channels B, G and R
+		This method can be used for other channel images too
+	*/
 	//Mat channel[3];
 	//split(img, channel);
 	//windowName = "B channel";
@@ -54,8 +58,7 @@ int main() {
 	string writeName = "saved_HappyFish.png";
 	imwrite(writeName, img);
 
-	//Processing
-	//RGB to Gray
+	//color plane conversion ----> RGB to Gray
 	Mat grayImg(img.rows, img.cols, CV_8UC1);
 	//Mat processImg;
 	cvtColor(img, grayImg, COLOR_BGR2GRAY);
@@ -69,6 +72,7 @@ int main() {
 	namedWindow(windowName, WINDOW_AUTOSIZE);
 	imshow(windowName, grayImg);
 
+	////color plane conversion ----> RGB to LAB
 	//Mat labImg;
 	//cvtColor(img, labImg, COLOR_BGR2Lab);
 
@@ -77,6 +81,7 @@ int main() {
 	//namedWindow(windowName, WINDOW_AUTOSIZE);
 	//imshow(windowName, labImg);
 
+	////color plane conversion ----> RGB to HSV
 	//Mat hsvImg;
 	//cvtColor(img, hsvImg, COLOR_BGR2HSV);
 
@@ -85,7 +90,7 @@ int main() {
 	//namedWindow(windowName, WINDOW_AUTOSIZE);
 	//imshow(windowName, hsvImg);
 
-
+	////Spliting HSV image into H, S and V plane like the above example RGB split
 	//Mat channelHSV[3];
 	//split(hsvImg, channelHSV);
 	//windowName = "H channel";
@@ -101,6 +106,7 @@ int main() {
 	//imshow(windowName, channelHSV[2]);
 
 
+	//
 	Mat binaryimg;
 	int thresh = 120;
 	threshold(grayImg, binaryimg, thresh, 255, THRESH_BINARY_INV);
@@ -125,5 +131,17 @@ int main() {
 	imshow(windowName, maskImg);
 
 	waitKey();
+
+	//Releasing allocated memory
+	img.release();
+	grayImg.release();
+	binaryimg.release();
+	binaryimg1.release();
+	maskImg.release();
+	//channelHSV.release();
+	//hsvImg.release();
+	//labImg.release();
+	//channel.release();
+
 	return 1;
 }
